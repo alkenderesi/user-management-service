@@ -22,4 +22,4 @@ class User(UserBase):
     last_login: datetime | None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
