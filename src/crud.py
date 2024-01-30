@@ -40,7 +40,7 @@ def update_user(db: Session, db_user: models.User, user: schemas.UserUpdate):
 
     if user.email:
         db_user.email = user.email
-    
+
     if user.password:
         db_user.hashed_password = user.password + "notreallyhashed"
 

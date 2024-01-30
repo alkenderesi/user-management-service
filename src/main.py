@@ -6,7 +6,7 @@ https://fastapi.tiangolo.com/tutorial/sql-databases/#main-fastapi-app
 
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
-from . import crud, models, schemas
+from . import crud, models, schemas, auth
 from .database import SessionLocal, engine
 
 
@@ -71,3 +71,11 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
 
     return crud.delete_user(db, db_user)
+
+
+@app.post("/login/")
+def login(credentials: schemas.UserCredentials, db: Session = Depends(get_db)):
+    if not auth.validate_credentials(db, credentials):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    return {"message": "Logged in"}
