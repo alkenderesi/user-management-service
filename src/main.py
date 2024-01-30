@@ -6,7 +6,6 @@ https://fastapi.tiangolo.com/tutorial/sql-databases/#main-fastapi-app
 
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
-from typing import Any
 from . import crud, models, schemas
 from .database import SessionLocal, engine
 
@@ -52,27 +51,16 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 
 @app.put("/users/{user_id}", response_model=schemas.User)
-def update_user(user_id: int, user_data: dict[str, Any], db: Session = Depends(get_db)):
+def update_user(user_id: int, user: schemas.UserUpdate, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id)
 
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    valid_attributes = {"name", "email", "password"}
-
-    if len(user_data) > len(valid_attributes):
-        raise HTTPException(status_code=400, detail="Too many attributes")
-
-    if invalid_attributes := set(user_data) - valid_attributes:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Invalid attributes: {', '.join(invalid_attributes)}",
-        )
-
-    if "email" in user_data and crud.get_user_by_email(db, user_data["email"]):
+    if user.email and crud.get_user_by_email(db, user.email):
         raise HTTPException(status_code=400, detail="Email already registered")
 
-    return crud.update_user(db, db_user, user_data)
+    return crud.update_user(db, db_user, user)
 
 
 @app.delete("/users/{user_id}", response_model=schemas.User)

@@ -5,7 +5,6 @@ https://fastapi.tiangolo.com/tutorial/sql-databases/#crud-utils
 """
 
 from sqlalchemy.orm import Session
-from typing import Any
 from . import models, schemas
 
 
@@ -35,12 +34,15 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-def update_user(db: Session, db_user: schemas.User, user_data: dict[str, Any]):
-    if "password" in user_data:
-        user_data["hashed_password"] = user_data.pop("password") + "notreallyhashed"
+def update_user(db: Session, db_user: models.User, user: schemas.UserUpdate):
+    if user.name:
+        db_user.name = user.name
 
-    for user_attribute, new_value in user_data.items():
-        setattr(db_user, user_attribute, new_value)
+    if user.email:
+        db_user.email = user.email
+    
+    if user.password:
+        db_user.hashed_password = user.password + "notreallyhashed"
 
     db.commit()
     db.refresh(db_user)
