@@ -46,3 +46,10 @@ def update_user(db: Session, db_user: schemas.User, user_data: dict[str, Any]):
     db.refresh(db_user)
 
     return db_user
+
+
+def delete_user(db: Session, db_user: schemas.User):
+    db.delete(db_user)
+    db.commit()
+
+    return db_user
