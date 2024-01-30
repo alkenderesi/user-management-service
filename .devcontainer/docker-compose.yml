@@ -1,0 +1,40 @@
+# Docker Compose elements:
+# https://docs.docker.com/compose/compose-file/05-services/
+
+version: "3.8"
+services:
+  user-api:
+    container_name: user-api
+    depends_on:
+      - user-database
+    image: python:3.11
+    env_file: .env
+    ports:
+      - "${FAST_API_PORT}:${FAST_API_PORT}"
+    volumes:
+      - ..:/workspace
+    working_dir: /workspace
+    command: sleep infinity
+
+  user-database:
+    container_name: user-database
+    image: postgres:15
+    env_file: .env
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    env_file: .env
+    ports:
+      - "${PGADMIN_LISTEN_PORT}:${PGADMIN_LISTEN_PORT}"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+
+volumes:
+  postgres-data:
+  pgadmin-data:

@@ -3,15 +3,18 @@
 {
 	"name": "python",
 
-	// Use existing Docker images:
-	// https://hub.docker.com/search?q=
-	"image": "python:3.11",
+	// Docker Compose specific properties:
+	// https://containers.dev/implementors/json_reference/#compose-specific
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "user-api",
+	"shutdownAction": "none",
+	"workspaceFolder": "/workspace",
 
-	// Run commands after the container is built:
+	// Commands after the container is built:
 	// https://containers.dev/implementors/json_reference/#lifecycle-scripts
-	"postCreateCommand": "chmod +x .devcontainer/setup.sh && ./.devcontainer/setup.sh",
+	"postCreateCommand": ". .devcontainer/setup.sh",
 
-	// Configure tool-specific properties:
+	// Tool-specific properties:
 	// https://containers.dev/supporting
 	"customizations": {
 		"vscode": {

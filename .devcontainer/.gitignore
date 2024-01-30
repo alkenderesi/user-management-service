@@ -1,1 +1,5 @@
+# Devcontainer cache
 .cache/
+
+# Devcontainer .env
+!.env
