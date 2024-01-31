@@ -1,11 +1,11 @@
 # user-management-service
 
 ## Description
-This project is a a simple user management and authentication system using [FastAPI](https://fastapi.tiangolo.com/) + [PostgreSQL](https://www.postgresql.org/).  
+This project is a simple user management and authentication system using [FastAPI](https://fastapi.tiangolo.com/) + [PostgreSQL](https://www.postgresql.org/).  
 
 The current features include:
 * User model
-* Create, Read, Update, Delete web service endpoints
+* Create, Read, Update, and Delete web service endpoints
 * Login endpoint
 * Auto-generated API documentation
 
