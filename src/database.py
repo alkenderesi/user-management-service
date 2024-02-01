@@ -6,9 +6,8 @@ https://fastapi.tiangolo.com/tutorial/sql-databases/#create-the-sqlalchemy-parts
 
 import os
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 
 
 USER = os.getenv("POSTGRES_USER")
